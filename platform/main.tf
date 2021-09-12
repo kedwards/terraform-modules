@@ -7,17 +7,24 @@ resource "aws_launch_configuration" "this" {
   security_groups = [var.security_groups]
   user_data       = var.user_data
 
+  root_block_device {
+    encrypted = true
+  }
+
   lifecycle {
     create_before_destroy = true
   }
 }
 
 resource "aws_lb" "this" {
-  name               = "${var.name}-lb"
+  name = "${var.name}-lb"
+  # tfsec:ignore:AWS005
   internal           = var.internal ? true : false
   load_balancer_type = var.load_balancer_type
   security_groups    = var.alb_security_groups
   subnets            = var.app_subnets
+
+  drop_invalid_header_fields = true
 
   tags = merge(
     {
@@ -29,8 +36,9 @@ resource "aws_lb" "this" {
 }
 
 resource "aws_alb_target_group" "this" {
-  name     = "${var.name}-lb-tg"
-  port     = var.target_group_port
+  name = "${var.name}-lb-tg"
+  port = var.target_group_port
+  # tfsec:ignore:AWS004
   protocol = var.protocol
   vpc_id   = var.vpc_id
   health_check {
@@ -50,7 +58,8 @@ resource "aws_alb_target_group" "this" {
 resource "aws_alb_listener" "this" {
   load_balancer_arn = aws_lb.this.arn
   port              = 80
-  protocol          = var.protocol
+  # tfsec:ignore:AWS004
+  protocol = var.protocol
 
   default_action {
     type             = "forward"

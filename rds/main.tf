@@ -45,19 +45,21 @@ resource "aws_db_parameter_group" "this" {
 }
 
 resource "aws_db_instance" "this" {
-  identifier           = var.db_name
-  allocated_storage    = var.allocated_storage
-  storage_type         = var.storage_type
-  engine               = var.engine
-  engine_version       = var.engine_version
-  instance_class       = var.instance_class
-  name                 = var.db_name
-  username             = var.username
-  password             = random_string.db_password.result
-  db_subnet_group_name = aws_db_subnet_group.this.name
-  parameter_group_name = aws_db_parameter_group.this.id
-  publicly_accessible  = false
-  skip_final_snapshot  = true
+  identifier              = var.db_name
+  allocated_storage       = var.allocated_storage
+  storage_type            = var.storage_type
+  engine                  = var.engine
+  engine_version          = var.engine_version
+  instance_class          = var.instance_class
+  name                    = var.db_name
+  username                = var.username
+  password                = random_string.db_password.result
+  db_subnet_group_name    = aws_db_subnet_group.this.name
+  parameter_group_name    = aws_db_parameter_group.this.id
+  publicly_accessible     = false
+  skip_final_snapshot     = true
+  backup_retention_period = 5
+  storage_encrypted       = true
 
   vpc_security_group_ids = [var.security_group]
 

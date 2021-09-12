@@ -5,7 +5,7 @@ resource "aws_launch_configuration" "this" {
   #
   # We're only setting the name_prefix here,
   # Terraform will add a random string at the end to keep it unique.
-  associate_public_ip_address = var.associate_public_ip_address
+  associate_public_ip_address = false
   enable_monitoring           = var.enable_monitoring
   image_id                    = var.ami
   instance_type               = var.instance_type
@@ -17,6 +17,7 @@ resource "aws_launch_configuration" "this" {
   root_block_device {
     volume_type = var.volume_type
     volume_size = var.volume_size
+    encrypted   = true
   }
 
   lifecycle {
@@ -52,11 +53,14 @@ resource "aws_autoscaling_attachment" "this" {
 }
 
 resource "aws_lb" "this" {
-  name               = "${var.name}-lb"
+  name = "${var.name}-lb"
+  # tfsec:ignore:AWS005
   internal           = var.internal_lb ? true : false
   load_balancer_type = var.load_balancer_type
   security_groups    = var.alb_security_groups
   subnets            = var.subnets
+
+  drop_invalid_header_fields = true
 
   tags = merge(
     {
@@ -68,8 +72,9 @@ resource "aws_lb" "this" {
 }
 
 resource "aws_alb_target_group" "this" {
-  name     = "${var.name}-lb-tg"
-  port     = var.target_group_port
+  name = "${var.name}-lb-tg"
+  port = var.target_group_port
+  # tfsec:ignore:AWS004
   protocol = var.protocol
   vpc_id   = var.vpc_id
   health_check {
@@ -89,7 +94,8 @@ resource "aws_alb_target_group" "this" {
 resource "aws_alb_listener" "this" {
   load_balancer_arn = aws_lb.this.arn
   port              = 80
-  protocol          = var.protocol
+  # tfsec:ignore:AWS004
+  protocol = var.protocol
 
   default_action {
     type             = "forward"
