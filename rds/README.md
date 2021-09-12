@@ -11,7 +11,7 @@
         security_group  = "sg-xxxxxxxxxxxx"
         subnets         = ["subnet-xxxxxxxx", "subnet-xxxxxxxxx"]
         username        = "terraform"
-        
+
         tags = {
             Environment = "dev"
             Owner       = "Kevin Edwards"

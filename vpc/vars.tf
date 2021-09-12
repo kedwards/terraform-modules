@@ -77,7 +77,7 @@ variable "database_subnet_assign_ipv6_address_on_creation" {
 variable "database_subnet_ipv6_prefixes" {
   default     = []
   description = "Assigns IPv6 database subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list"
-  type        = list
+  type        = list(any)
 }
 
 
@@ -174,7 +174,7 @@ variable "private_subnet_assign_ipv6_address_on_creation" {
 variable "private_subnet_ipv6_prefixes" {
   default     = []
   description = "Assigns IPv6 private subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list"
-  type        = list
+  type        = list(any)
 }
 
 variable "private_subnet_tags" {
@@ -206,7 +206,7 @@ variable "public_subnet_assign_ipv6_address_on_creation" {
 variable "public_subnet_ipv6_prefixes" {
   default     = []
   description = "Assigns IPv6 public subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list"
-  type        = list
+  type        = list(any)
 }
 
 variable "public_subnet_tags" {

@@ -12,7 +12,7 @@
         subnet           = "us-east-1a"
         user_data        = data.template_file.user_data.rendered
         security_groups  = ["sg-xxxxxxxxxxxxxxx"]
-        
+
         tags = merge(
             local.tags,
             {
