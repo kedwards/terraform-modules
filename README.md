@@ -5,6 +5,7 @@
 
 - [ec2](ec2/README.md) - EC2
 - [ec2-ha](ec2-ha/README.md) - EC2 High Avalability
+- [eks-vpc](eks-vpc/README.md) - K8s VPC
 - [platform](platform/README.md) - platform
 - [rds](state/README.md) - RDS
 - [security_group](security_group/README.md) - security_group
