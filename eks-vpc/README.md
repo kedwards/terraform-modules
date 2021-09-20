@@ -10,7 +10,7 @@ locals {
 }
 
 module "vpc" {
-  source                          = "../../../../terraform-modules/eks-vpc"
+  source                          = "git::https://github.com:kedwards/terraform_modules.git//eks-vpc?ref=[vx.x.x]"
   clusters_name_prefix            = var.clusters_name_prefix
   eks_vpc_block                   = var.vpc_block
   eks_public_subnets_prefix_list  = var.public_subnets_prefix_list
