@@ -26,11 +26,7 @@ resource "aws_instance" "this" {
 
   tags = merge(
     {
-      "Name" = format(
-        "%s-instance-%s",
-        var.name,
-        count.index
-      )
+      "Name" = format("%s-instance-%s", var.name, count.index)
     },
     var.tags,
     var.instance_tags

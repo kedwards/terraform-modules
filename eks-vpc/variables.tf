@@ -19,11 +19,11 @@ variable "common_tags" {
 }
 
 variable "single_nat_gateway" {
-  type = bool
+  type    = bool
   default = true
 }
 
 variable "one_nat_gateway_per_az" {
-  type = bool
+  type    = bool
   default = false
 }
